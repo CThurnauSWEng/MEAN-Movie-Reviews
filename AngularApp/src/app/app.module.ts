@@ -13,7 +13,6 @@ import { UpdatereviewComponent } from './updatereview/updatereview.component';
 import { HttpService } from './http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { AddbothComponent } from './addboth/addboth.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +22,6 @@ import { AddbothComponent } from './addboth/addboth.component';
     DashboardComponent,
     ShowreviewComponent,
     UpdatereviewComponent,
-    AddbothComponent,
   ],
   imports: [
     BrowserModule,
