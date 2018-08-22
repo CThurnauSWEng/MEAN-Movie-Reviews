@@ -1,0 +1,58 @@
+* {
+    margin: 15px;
+    padding: 0px;
+    font-family: sans-serif;
+  }
+table {
+    border-collapse: collapse;
+}
+table, th, td{
+    border: 1px solid black;
+    padding: 5px 20px 5px 10px;
+    vertical-align: center;
+}
+th {
+    background-color: rgb(211, 211, 211);
+    color: white;
+    text-align: left;
+}
+tr:nth-child(even) {
+    background-color: rgb(211, 211, 211)
+}
+
+.purpletext {
+    color: rgb(118, 24, 244);
+}
+h1 {
+    text-align: left;
+}
+button {
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    width: 90px;
+    height: 1.7em;
+    padding: 10px 0px 25px 0px;
+    
+}
+.greyButton {
+    background-color: rgb(137, 156, 172);
+    font-size: 1.1em;
+    width: 160px;
+}
+.brownButton {
+    background-color: rgb(185, 178, 168);
+}
+.mauveButton {
+    background-color: rgb(136, 58, 94);
+}
+.grey2Button {
+    background-color: rgb(100, 91, 95);
+}
+h2 {
+    display: inline-block;
+}
+.formDiv {
+    border: 1px solid black;
+    width: 600px;
+}

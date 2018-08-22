@@ -1,0 +1,22 @@
+<div *ngIf="movieDataAvailable" class="formDiv">
+  <h2>Movie List</h2>
+  <button class="greyButton" [routerLink]="['/movies/new']">Add a new movie review</button>
+  <table>
+    <thead>
+      <tr>
+        <th>Movie title</th>
+        <th>Actions Available</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let movie of movies">
+        <td>{{movie.title}}</td>
+        <td>
+          <button class="grey2Button" [routerLink]="['/movies',movie._id]">Read Reviews</button> 
+          <button class="brownButton" [routerLink]="['/movies/review',movie._id]">Write review</button> 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

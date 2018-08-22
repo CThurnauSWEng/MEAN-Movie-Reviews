@@ -1,0 +1,28 @@
+<div class="formDiv">
+    <h2>Submit a movie and your review</h2>
+    <p *ngIf="error1Present" class="purpleText" >{{ result['error1Message'] }}</p>
+    <p *ngIf="errorsPresent" class="purpleText" >{{ errorMessage }}</p>
+    <p *ngIf="error2Present" class="purpleText" >{{ result['error2Message'] }}</p>
+    <p *ngIf="error3Present" class="purpleText" >{{ result['error3Message'] }}</p>
+    <p *ngIf="error4Present" class="purpleText" >{{ result['error4Message'] }}</p>
+    <form (submit)="onSubmit()">
+        <label>Movie Title:</label>
+        <input type="text" class="textInput" name="movie.title" [(ngModel)]="movie.title" />
+        <label>Your name:</label>
+        <input type="text" class="textInput" name="review.reviewerName" [(ngModel)]="review.reviewerName" />
+        <label>Stars:</label>
+        <select name="review.num_stars" [(ngModel)]="review.num_stars" >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <label>Your review:</label>
+        <input type="text" class="textInput" name="review.description" [(ngModel)]="review.description" />
+        <div class="buttonDiv">
+            <input class="blueButton subButton" type="submit" value="Submit" />
+            <button [routerLink]="['/movies']" class="blueButton">Cancel</button>
+        </div>
+    </form>
+  </div>

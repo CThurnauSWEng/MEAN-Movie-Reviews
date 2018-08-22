@@ -1,0 +1,23 @@
+<button *ngIf="movieDataAvailable" class="redButton" (click)="deleteMovie(movieId)">Delete</button>
+<button class="greyButton" [routerLink]="['/']">Home</button>
+<div *ngIf="movieDataAvailable" class="formDiv">
+    <h3>Reviews for {{movie['title']}}</h3>
+    <div *ngIf="reviewDataAvailable">
+        <table>
+            <thead>
+                <tr>
+                    <th>Reviewer</th>
+                    <th>Number of Stars</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let review of reviews ">
+                    <td>{{ review.reviewerName }}</td>
+                    <td>{{ review.num_stars }}</td>
+                    <td>{{ review.description }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
