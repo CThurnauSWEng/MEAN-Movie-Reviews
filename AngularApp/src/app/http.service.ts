@@ -33,6 +33,7 @@ export class HttpService {
     console.log("2000 - in updateMovie: movie: ", movie )
     console.log("2001 - avg_stars: ", movie['avg_stars']);
     console.log("2002 - movidId: ", movieId);
+    console.log("2003 - num_reviews: ", movie['num_reviews'])
 
     var url_string = '/movie/' + movieId;
     console.log("url_string: ", url_string);

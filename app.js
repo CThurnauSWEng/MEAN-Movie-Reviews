@@ -21,6 +21,7 @@ var Schema = mongoose.Schema;
 var MovieSchema = new mongoose.Schema({
     title: {type: String, required: true, minlength: 3},
     avg_stars: {type: String},
+    num_reviews: {type: Number, default: 1},
     reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
 }, {timestamps: true})
 mongoose.model("Movie",MovieSchema);
@@ -151,15 +152,19 @@ app.post('/createreview/', function(req, res){
 
 
 app.put('/movie/:id', function(req,res){
-    console.log("in movie put, req.body: ", req.body);
-    console.log("req.body['title']", req.body['title']);
+    // console.log("in movie put, req.body: ", req.body);
+    // console.log("req.body['title']", req.body['title']);
 
-    Movie.update({_id: req.params.id}, {title: req.body['title'], avg_stars: req.body['avg_stars']},{runValidators: true}, function (err){
+    Movie.update({_id: req.params.id}, 
+                {title: req.body['title'], 
+                 avg_stars: req.body['avg_stars'],
+                 num_reviews: req.body['num_reviews']},
+                 {runValidators: true}, function (err){
         if (err){
-            console.log("error updating movie", err);
+            // console.log("error updating movie", err);
             res.json({message: "Error", error: err})
         } else {
-            console.log("success updating movie")
+            // console.log("success updating movie")
             res.json({message: "Success - Movie Updated"})
         }
     });    

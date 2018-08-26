@@ -13,7 +13,7 @@ table, th, td{
 }
 th {
     background-color: rgb(211, 211, 211);
-    color: white;
+    color: black;
     text-align: left;
 }
 tr:nth-child(even) {
@@ -88,4 +88,22 @@ h2 {
     font-size: 2.2em;
     position: relative;
     top: 8px;
+    margin: 0px;
+    padding: 0px;
+}
+.num_reviews {
+    margin: 0px;
+    padding: 0px;
+    font-size: .8em;
+    position: relative;
+    top: -10px;
+}
+.alink {
+    background:none!important;
+    color:inherit;
+    border:none; 
+    padding:0!important;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline;
 }

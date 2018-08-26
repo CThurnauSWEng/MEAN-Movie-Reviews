@@ -28,10 +28,12 @@
     </thead>
     <tbody>
       <tr *ngFor="let movie of movies">
-        <td>{{movie.title}}</td>
-        <td class="star">{{movie.avg_stars}}</td>
+        <td><button class="alink" [routerLink]="['/movies',movie._id]">{{movie.title}}</button></td>
         <td>
-          <button class="grey2Button" [routerLink]="['/movies',movie._id]">Read Reviews</button> 
+          <p class="star">{{movie.avg_stars}}</p>
+          <p class="num_reviews">({{movie.num_reviews}} Reviews)</p>          
+        </td>
+        <td>
           <button class="brownButton" [routerLink]="['/movies/review',movie._id]">Write review</button> 
         </td>
       </tr>

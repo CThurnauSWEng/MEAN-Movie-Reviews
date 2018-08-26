@@ -1,6 +1,7 @@
-<button *ngIf="movieDataAvailable" class="redButton" (click)="deleteMovie(movieId)">Delete</button>
+<button *ngIf="movieDataAvailable" class="redButton" (click)="deleteMovie(movieId)">Delete Movie</button>
 <button class="greyButton" [routerLink]="['/']">Home</button>
 <div *ngIf="movieDataAvailable" class="formDiv">
+    <button class="brownButton" [routerLink]="['/movies/review',movieId]">Write review</button> 
     <h3>Reviews for {{movie['title']}}</h3>
     <div *ngIf="reviewDataAvailable">
         <table>

@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
       // }
       // console.log("data['data'][0]['reviews']" , data['data'][0]['reviews'])
       // console.log("data['data'][0]['reviews']['0']" , data['data'][0]['reviews']['0'])
-      console.log("999 --- data['data'][0]['reviews']['0']['num_stars']" , data['data'][0]['reviews']['0']['num_stars'])
+      // console.log("999 --- data['data'][0]['reviews']['0']['num_stars']" , data['data'][0]['reviews']['0']['num_stars'])
       if(data['message']=="Success"){
         // console.log("success in componennt get movies")
         this.movies = data['data'];

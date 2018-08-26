@@ -48,6 +48,9 @@ button {
 }
 .brownButton {
     background-color: rgb(185, 178, 168);
+    font-size: 1.1em;
+    width: auto;
+    padding: 0px 15px 0px 15px;
 }
 .grey2Button {
     background-color: darkgrey;

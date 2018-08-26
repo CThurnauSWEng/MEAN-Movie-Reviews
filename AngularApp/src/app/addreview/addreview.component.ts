@@ -87,6 +87,9 @@ export class AddreviewComponent implements OnInit {
   }
 
   updateAverageStars(){
+    // retrieve all reviews and find an average of the stars
+    // also, update the number of reviews
+
     console.log ("updateAverageStars 1: movieId: ", this.movieId);
 
     let observable = this._httpService.getMovieById(this.movieId);
@@ -108,6 +111,8 @@ export class AddreviewComponent implements OnInit {
       }
       console.log("starString", starString);
       movie['avg_stars'] = starString;
+      movie['num_reviews']++;
+      console.log("num_reviews: ", movie['num_reviews']);
 
       let observable = this._httpService.updateMovieStars(this.movieId, movie);
       observable.subscribe(data => {
