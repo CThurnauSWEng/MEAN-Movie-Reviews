@@ -43,3 +43,6 @@ export class DashboardComponent implements OnInit {
   }
 
 }
+
+// future enhancement - in html, when there is only one review, change dashboard
+// display to say "1 Review" instead of "1 Reviews"
