@@ -10,7 +10,6 @@ export class HttpService {
   constructor(private _http: HttpClient) { }
 
   getMovies() {
-    console.log("in service getMovies");
     return this._http.get('/allmovies');
   }
 
@@ -24,21 +23,12 @@ export class HttpService {
   }
 
   getMovieById(id){
-    console.log("in service getMovieById, id: ", id);
     return this._http.get('/movie/'+id);
   }
 
   updateMovieStars(movieId, movie){
     // called by updateAverageStars in addreview component
-    console.log("2000 - in updateMovie: movie: ", movie )
-    console.log("2001 - avg_stars: ", movie['avg_stars']);
-    console.log("2002 - movidId: ", movieId);
-    console.log("2003 - num_reviews: ", movie['num_reviews'])
-
     var url_string = '/movie/' + movieId;
-    console.log("url_string: ", url_string);
-    console.log("sending ", movie['title'], "to app.js with avg_stars: ", movie['avg_stars']);
-
     return this._http.put(url_string, movie);    
   }
 
@@ -65,7 +55,6 @@ export class HttpService {
       review: review,
       movieId : movieId
     }
-    console.log("in http service, movieId: ", movieId)
     return this._http.post('/createreview', reviewMovieId);
   }
 
