@@ -15,8 +15,9 @@ export class ShowreviewComponent implements OnInit {
   movieId: any;
   reviewId: any;
   movie = {
-    'title' : "",
-    'reviews': []
+    'title'     : "",
+    'avg_stars' : "",
+    'reviews'   : []
   }
   errorsPresent = false;
   errorMessage = "";
@@ -34,21 +35,21 @@ export class ShowreviewComponent implements OnInit {
       let observable = this._httpService.getMovieById(this.movieId);
       observable.subscribe(data => {
         if (data['message']=="Error"){
-          console.log("error getting movie")
+          // console.log("error getting movie")
         } else {
-          console.log(data['data'][0]['title']);
+          // console.log(data['data'][0]['title']);
           this.movie['title'] = data['data'][0]['title'];
           this.reviews = data['data'][0]['reviews'];
           if (this.reviews.length > 0){
-            console.log("this.reviews.length: ", this.reviews.length);
+            // console.log("this.reviews.length: ", this.reviews.length);
             this.movieDataAvailable = true;
             this.reviewDataAvailable = true;
-            console.log("show component 630 reviews: ", this.reviews)
-            console.log("show component 631 movie: ", this.movie)
-            console.log("show component 632 reviewdataavailable: ", this.movieDataAvailable)
-            console.log("show component 633 moviedataavailable: ", this.reviewDataAvailable)
+            // console.log("show component 630 reviews: ", this.reviews)
+            // console.log("show component 631 movie: ", this.movie)
+            // console.log("show component 632 reviewdataavailable: ", this.movieDataAvailable)
+            // console.log("show component 633 moviedataavailable: ", this.reviewDataAvailable)
           }
-          console.log("show component 640 reviews: ", this.reviews)
+          // console.log("show component 640 reviews: ", this.reviews)
         }
 
       })

@@ -1,16 +1,35 @@
 <div *ngIf="movieDataAvailable" class="formDiv">
+  <h2>What's your favorite movie? Let's share recommendations!</h2>
+  <div class="threePerPage">
+    <div class="rotateSmiley">
+      <img src='/assets/images/SmileysPeople.png' class="imageClass">
+    </div>
+  </div>
+  <div class="threePerPage">
+    <div class="rotateFifth">
+      <img src='/assets/images/FifthElement.png' class="imageClass">
+    </div>
+  </div>
+  <div class="threePerPage">
+    <div class="rotateShawshank">
+      <img src='/assets/images/Shawshank.png' class="imageClass">
+    </div>
+  </div>
+  <p></p>
   <h2>Movie List</h2>
-  <button class="greyButton" [routerLink]="['/movies/new']">Add a new movie review</button>
+  <button class="greyButton" [routerLink]="['/movies/new']">Add a new movie and review</button>
   <table>
     <thead>
       <tr>
         <th>Movie title</th>
+        <th>Rating</th>
         <th>Actions Available</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let movie of movies">
         <td>{{movie.title}}</td>
+        <td class="star">{{movie.avg_stars}}</td>
         <td>
           <button class="grey2Button" [routerLink]="['/movies',movie._id]">Read Reviews</button> 
           <button class="brownButton" [routerLink]="['/movies/review',movie._id]">Write review</button> 

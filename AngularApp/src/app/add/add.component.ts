@@ -23,33 +23,40 @@ export class AddComponent implements OnInit {
     private _router: Router) { }
 
   ngOnInit() {
-    this.movie= {title: "",reviews: []}
+    this.movie= {
+      title: "",
+      avg_stars: 0,
+      reviews: []}
+
     this.review = {
       reviewerName: "",
       description: "",
       num_stars: ""
     }
+
     this.errorMessage = "";
+
     this.result = {
       message: "",
       errorMessage: ""
     }
   }
   onSubmit(){
-    console.log("in onSubmit in add component, this.movie: ", this.movie)
-    console.log("in onSubmit in add component, this.review: ", this.review)
+    // console.log("in onSubmit in add component, this.movie: ", this.movie)
+    // console.log("in onSubmit in add component, this.review: ", this.review)
     this.validateData();
-    console.log("Result from validateData call: ", this.result)
-    console.log("this.error1Present: ",this.error1Present)
-    console.log("this.error2Present: ",this.error2Present)
+    // console.log("Result from validateData call: ", this.result)
+    // console.log("this.error1Present: ",this.error1Present)
+    // console.log("this.error2Present: ",this.error2Present)
     if (this.result['message'] == "Too Short"){
-      console.log("title too short detected");
+      // console.log("title too short detected");
       this.errorsPresent = true;
       this.errorMessage = this.result['errorMessage'];
     } else {
+      this.computeAverageStars();
       let observable = this._httpService.addMovieAndReview(this.movie,this.review);
       observable.subscribe(data => {
-        console.log("from add: 1", data);
+        // console.log("from add: 1", data);
           if (data['message']=="Error"){
             this.errorsPresent = true;
             this.errorMessage = data['error']['errors']['message'];
@@ -62,6 +69,18 @@ export class AddComponent implements OnInit {
    }
   }
 
+  computeAverageStars(){
+    // when adding a new movie, the avg_stars = the number entered for this review
+    var starString = "";
+    for (var i = 0; i<this.review['num_stars']; i++){
+      starString += "*";
+    }
+    console.log("starString", starString);
+    this.movie['avg_stars'] = starString;
+    console.log("****** in computeAverageStars in add component, this.movie: ", this.movie)
+    console.log("****** in computeAverageStars in add component, this.review: ", this.review)
+  }
+
   validateData(){
     this.result['message'] = "In validateData";
     this.result['error1Message'] = "Message 1 from validateData"
@@ -70,10 +89,10 @@ export class AddComponent implements OnInit {
     this.error2Present = false;
     this.error3Present = false;
     this.error4Present = false;
-    console.log("in validateData: movie: ", this.movie, " length: ", this.movie['title'].length);
-    console.log("in validateData: review: ", this.review)
+    // console.log("in validateData: movie: ", this.movie, " length: ", this.movie['title'].length);
+    // console.log("in validateData: review: ", this.review)
     if (this.movie['title'].length < 3){
-      console.log("movie title too short");
+      // console.log("movie title too short");
       this.error1Present = true;
       this.result['message'] = "Too Short";
       this.result['error1Message'] = "Movies must have a title at least 3 characters long"
@@ -97,7 +116,7 @@ export class AddComponent implements OnInit {
           this.result['message'] = "Too Short";
           this.result['error4Message'] = "You can only choose between 1 to 5 stars"    
     }
-    console.log("this.result: ", this.result);
+    // console.log("this.result: ", this.result);
     return;
   }
 }

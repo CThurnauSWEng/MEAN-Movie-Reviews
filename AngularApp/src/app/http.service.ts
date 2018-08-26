@@ -28,10 +28,19 @@ export class HttpService {
     return this._http.get('/movie/'+id);
   }
 
-  updateMovieById(movie){
-    var url_string = '/movie/' + movie._id;
-    return this._http.put(url_string, movie);
+  updateMovieStars(movieId, movie){
+    // called by updateAverageStars in addreview component
+    console.log("2000 - in updateMovie: movie: ", movie )
+    console.log("2001 - avg_stars: ", movie['avg_stars']);
+    console.log("2002 - movidId: ", movieId);
+
+    var url_string = '/movie/' + movieId;
+    console.log("url_string: ", url_string);
+    console.log("sending ", movie['title'], "to app.js with avg_stars: ", movie['avg_stars']);
+
+    return this._http.put(url_string, movie);    
   }
+
 
   findMovieByName(movie){
     var url_string = '/movieName' + movie['title'];
@@ -39,6 +48,8 @@ export class HttpService {
   }
 
   addMovieAndReview(movie, review){
+    // invoked by add component
+
     var reviewAndMovie = {
       review : review,
       movie  : movie 
@@ -47,6 +58,8 @@ export class HttpService {
   }
 
   addReview(review, movieId){
+    // invoked by addreview component
+
     var reviewMovieId = {
       review: review,
       movieId : movieId

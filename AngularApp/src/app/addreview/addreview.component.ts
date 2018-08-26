@@ -11,8 +11,9 @@ export class AddreviewComponent implements OnInit {
 
   review: any;
   movie = {
-    'title' : "",
-    'reviews' : []
+    'title'     : "",
+    'avg_stars' : "",
+    'reviews'   : []
   }
   error1Present = false;
   error2Present = false;
@@ -47,6 +48,7 @@ export class AddreviewComponent implements OnInit {
         } else {
           console.log(data['data'][0]['title']);
           this.movie['title'] = data['data'][0]['title'];
+          this.movie['avg_stars'] = data['data'][0]['avg_stars'];
           this.movieDataAvailable = true;
         }
 
@@ -66,21 +68,60 @@ export class AddreviewComponent implements OnInit {
         if (data['message']=="Error"){
           this.errorsPresent = true;
           console.log("data['error']: ", data['error'])
-          console.log("data['error']['errors']['name']['message']: ", data['error']['errors']['name']['message'])
-          this.errorMessage = data['error']['errors']['name']['message'];
+          console.log("data['error']['message']: ", data['error']['message'])
+          this.errorMessage = data['error']['message'];
         } else {
+          // Successfully added review
           this.errorsPresent = false;
-          console.log("???? data returned from attempt to add review: ", data);
           this.errorMessage = "";
           this.review = {reviewerName: ""}
-          //this.url_string = '/reviews/' + this.movieId; *********
-          console.log("url_string: ", this.url_string);
-          //this._router.navigate([this.url_string]); ***********
+
+          // Update the average stars
+          this.updateAverageStars();
+
           this._router.navigate(['/movies',this.movieId]);
         }
       })
     }
     
+  }
+
+  updateAverageStars(){
+    console.log ("updateAverageStars 1: movieId: ", this.movieId);
+
+    let observable = this._httpService.getMovieById(this.movieId);
+    observable.subscribe(data => {
+
+      var movie = data['data']['0'];
+      console.log("Did we get it???? movie: ", movie);
+      var sum = 0;
+      var new_avg = 0;
+  
+      for (var i = 0; i < movie.reviews.length; i++){
+        console.log("2001 - num_stars in this review")
+        sum += Number(movie.reviews[i].num_stars);
+      }
+      new_avg = Math.ceil(sum/movie.reviews.length);
+      var starString = "";
+      for (var i = 0; i<new_avg; i++){
+        starString += "*";
+      }
+      console.log("starString", starString);
+      movie['avg_stars'] = starString;
+
+      let observable = this._httpService.updateMovieStars(this.movieId, movie);
+      observable.subscribe(data => {
+        if (data['message']=="Error"){
+          this.errorsPresent = true;
+          console.log("data['error']: ", data['error'])
+          console.log("data['error']['message']: ", data['error']['message'])
+          this.errorMessage = data['error']['message'];
+        } else {
+          console.log("successfully updated movie");
+        }
+      })
+
+    })
   }
 
   validateData(review){

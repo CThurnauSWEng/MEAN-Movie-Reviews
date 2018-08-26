@@ -20,6 +20,7 @@ var Schema = mongoose.Schema;
 
 var MovieSchema = new mongoose.Schema({
     title: {type: String, required: true, minlength: 3},
+    avg_stars: {type: String},
     reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
 }, {timestamps: true})
 mongoose.model("Movie",MovieSchema);
@@ -41,7 +42,7 @@ app.get('/', function (req, res){
 });
 
 app.get('/allmovies/', function(req,res){
-    console.log("in server: get movies")
+    // console.log("in server: get movies")
     Movie.find({})
         .populate('reviews')
         .exec(function(err, movies) {
@@ -49,7 +50,7 @@ app.get('/allmovies/', function(req,res){
             console.log("error retrieving movies");
             res.json({message: "Error", error: err})
         } else {
-            console.log("server 301: movie data: ", movies)
+            // console.log("server 301: movie data: ", movies)
             res.json({message: "Success", data: movies})
         }
     })
@@ -63,7 +64,7 @@ app.get('/movie/:id', function(req, res){
             console.log("error retrieving movie");
             res.json({message: "Error", error: err})
         } else {
-            console.log("got movie by id and theoretically populated: ", movie)
+            // console.log("got movie by id and theoretically populated: ", movie)
             res.json({message: "Success", data: movie})
         }
     })
@@ -117,26 +118,29 @@ app.post('/movie/', function(req,res){
 })
 
 app.post('/createreview/', function(req, res){
-    console.log("400 req.body.review: ",req.body.review);
+    // This route is invoked by httpService.addReview
+
+    // console.log("400 req.body.review: ",req.body.review);
     var review = new Review({"reviewerName": req.body['review']['reviewerName'], "description": req.body['review']['description'],"num_stars":req.body['review']['num_stars']});
-    console.log("review 401: ", review);
+    // console.log("review 401: ", review);
     var movieId = req.body.movieId;
-    console.log("movieid: ", movieId);
+    // console.log("movieid: ", movieId);
     Movie.findOne({_id: movieId}, function(err, movie){
         review._movie = movie._id;
-        console.log("review 405: ", review);
+        // console.log("review 405: ", review);
+        // console.log(" in createreview: 406: movie avg_stars: ", movie.avg_stars )
         review.save(function(err){
             if(err) {
                 console.log("510: err saving review", err);
             } else {
-                console.log("^^ returned from save review, err: ", err)
+                // console.log("^^ returned from save review, err: ", err)
                 movie.reviews.push(review);
                 movie.save(function(err){
                     if (err){
                         console.log("error saving movie with review");
                         res.json({message: "Error", error: err});
                     } else {
-                        console.log("$$$ saved movie: ", movie, "review: ", review);
+                        // console.log("$$$ saved movie: ", movie, "review: ", review);
                         res.json({message: "Success", movie: movie, review: review});
                     }
                 })
@@ -145,16 +149,34 @@ app.post('/createreview/', function(req, res){
     })
 })
 
+
+app.put('/movie/:id', function(req,res){
+    console.log("in movie put, req.body: ", req.body);
+    console.log("req.body['title']", req.body['title']);
+
+    Movie.update({_id: req.params.id}, {title: req.body['title'], avg_stars: req.body['avg_stars']},{runValidators: true}, function (err){
+        if (err){
+            console.log("error updating movie", err);
+            res.json({message: "Error", error: err})
+        } else {
+            console.log("success updating movie")
+            res.json({message: "Success - Movie Updated"})
+        }
+    });    
+})
+
+
 app.post('/addmoviereview', function (req, res){
     console.log("800 req.body.movie: ", req.body.movie);
-    console.log("801 req.body.review: ", req.body.review);
-    console.log("802 in post movie: req.body.title: ", req.body.movie['title']);
-    var movie = new Movie({"title": req.body.movie['title']});
+    // console.log("801 req.body.review: ", req.body.review);
+    // console.log("802 in post movie: req.body.title: ", req.body.movie['title']);
+    // console.log("802 in post movie: req.body.avg_stars: ", req.body.movie['avg_stars']);
+    var movie = new Movie({"title": req.body.movie['title'], "avg_stars": req.body.movie['avg_stars']});
     var review = new Review({"reviewerName": req.body['review']['reviewerName'], "description": req.body['review']['description'],"num_stars":req.body['review']['num_stars']});
     var movieId = movie['_id'];
     console.log("810 movie:", movie);
-    console.log("812 review: ", review);
-    console.log("813: movieId: ", movieId);
+    // console.log("812 review: ", review);
+    // console.log("813: movieId: ", movieId);
     movie.save(function(err){
         if (err){
             console.log("error creating the movie");
@@ -162,6 +184,7 @@ app.post('/addmoviereview', function (req, res){
         } else {
             // ok, now add the review to the movie
             Movie.findOne({_id: movieId}, function(err, movie){
+                console.log("%%%%% 811 retrieved movie to add review, movie: ", movie);
                 review._movie = movie._id;
                 console.log("review 405: ", review);
                 review.save(function(err){
@@ -184,17 +207,6 @@ app.post('/addmoviereview', function (req, res){
             })
         }        
     })
-})
-
-app.put('/movie/:id', function(req,res){
-    console.log("in update route")
-    Movie.update({_id: req.params.id}, {title: req.body.title},{runValidators: true}, function (err){
-        if (err){
-            res.json({message: "Error", error: err})
-        } else {
-            res.json({message: "Success - movie Updated"})
-        }
-    });    
 })
 
 app.put('/review/:id', function(req,res){
